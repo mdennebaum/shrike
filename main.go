@@ -18,7 +18,12 @@ func main() {
 	//parse the command line args
 	flag.Parse()
 
+	//setup a bootstrap
 	bootstrap := cheshire.NewBootstrapFile(config)
+
+	//create new cache with default timeout durration
+	c := cache.NewCache(nil)
+	controllers.StartApi(c)
 
 	//make sure the linker includes our controllers and runs inits
 	controllers.Load()
