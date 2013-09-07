@@ -1,6 +1,6 @@
 #Shrike
 
-Simple memory based key value store cheshire service.
+Simple memory based key value store goshire service.
 
 ##Install
 
@@ -36,3 +36,6 @@ Then you should be able to point your browser at http://localhost:8010/ping to m
 
 For more info on how to use the goshire framework checkout https://github.com/trendrr/goshire. If there are any issues please submit an ticket.
 
+##Not Implimented
+
+Cleaning up of expired items...
