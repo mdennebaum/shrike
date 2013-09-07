@@ -15,5 +15,5 @@ func NewItem(value interface{}, expiration *time.Time) {
 }
 
 func (i *Item) IsExpired() bool {
-	return false
+	return (time.Now() >= i.Expires)
 }
