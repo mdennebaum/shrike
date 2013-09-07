@@ -6,13 +6,13 @@ import (
 )
 
 //shared cache object
-var cache *cache.Cache
+var c *cache.Cache
 
 //register controllers
-func StartApi(c *cache.Cache) {
+func StartApi(ca *cache.Cache) {
 
 	//init shared cache object
-	cache = c
+	c = ca
 
 	//register the ping controller.
 	cheshire.RegisterApi("/ping", "GET", Ping)
@@ -41,7 +41,7 @@ func Get(txn *cheshire.Txn) {
 	if key, ok := txn.Params().GetString("key"); ok {
 
 		//try to get the val from the cache
-		if cacheVal, found := cache.GetString(key); found {
+		if cacheVal, found := c.GetString(key); found {
 
 			//add the val to the response data
 			response.Put("data", cacheVal)
@@ -67,7 +67,29 @@ func Set(txn *cheshire.Txn) {
 	//create a new response for this transaction
 	response := cheshire.NewResponse(txn)
 
-	response.Put("data", "PONG")
+	//set timeout. pass -1 to cache indefinatly. defaults to (24 hours)
+	timeout := txn.Params().MustInt("timeout", 0)
+
+	//get the key param
+	if key, kok := txn.Params().GetString("key"); kok {
+
+		//get the val param
+		if val, vok := txn.Params().GetString("val"); vok {
+
+			//set the val for given key with given timeout in cache
+			c.Set(key, val, timeout)
+		} else {
+
+			//set error status for missing val
+			response.SetStatus(400, "missing val param")
+		}
+	} else {
+
+		//set error status for missing key
+		response.SetStatus(400, "missing key param")
+	}
+
+	//write the response
 	txn.Write(response)
 }
 

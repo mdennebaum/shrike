@@ -7,12 +7,16 @@ import (
 	"log"
 )
 
+//init the app
 func init() {
+	//init to parse the command line args
 	flag.StringVar(&config, "config", "config/config.yaml", "path to the app config.yaml")
 }
 
+//string to hold the config path
 var config string
 
+//app entry point
 func main() {
 
 	//parse the command line args
@@ -23,10 +27,9 @@ func main() {
 
 	//create new cache with default timeout durration
 	c := cache.NewCache(nil)
-	controllers.StartApi(c)
 
-	//make sure the linker includes our controllers and runs inits
-	controllers.Load()
+	//start the cache api
+	controllers.StartApi(c)
 
 	//tell everyone we started up
 	log.Println("starting app with config: " + config)
