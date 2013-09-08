@@ -40,6 +40,10 @@ go run main.go
 
 Then you should be able to point your browser at http://localhost:8010/ping to make sure its working
 
+##Client
+
+Goshire comes with a bundled client that supports the binary and json protocols.
+
 ##More
 
 For more info on how to use the goshire framework checkout https://github.com/trendrr/goshire.
