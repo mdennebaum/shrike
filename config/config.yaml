@@ -1,5 +1,8 @@
 http:
-   port: 8010
+  port: 8010
 
 json:
-   port: 8009
+  port: 8009
+
+bin:
+  port: 8022

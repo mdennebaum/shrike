@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"github.com/mdennebaum/shrike/cache"
+	"github.com/pmylund/go-cache"
 	"github.com/trendrr/goshire/cheshire"
+	"time"
 )
 
 //shared cache object
@@ -14,8 +15,11 @@ func StartApi(ca *cache.Cache) {
 	//init shared cache object
 	c = ca
 
-	//register the ping controller.
+	//register controllers
 	cheshire.RegisterApi("/ping", "GET", Ping)
+	cheshire.RegisterApi("/get", "GET", Get)
+	cheshire.RegisterApi("/set", "POST", Set)
+	cheshire.RegisterApi("/delete", "DELETE", Delete)
 }
 
 // a demo Ping controller function
@@ -41,10 +45,10 @@ func Get(txn *cheshire.Txn) {
 	if key, ok := txn.Params().GetString("key"); ok {
 
 		//try to get the val from the cache
-		if cacheVal, found := c.GetString(key); found {
+		if cacheVal, found := c.Get(key); found {
 
 			//add the val to the response data
-			response.Put("data", cacheVal)
+			response.Put("data", cacheVal.(string))
 		} else {
 
 			//value not found. set status and message
@@ -68,7 +72,11 @@ func Set(txn *cheshire.Txn) {
 	response := cheshire.NewResponse(txn)
 
 	//set timeout. pass -1 to cache indefinatly. defaults to (24 hours)
-	timeout := txn.Params().MustInt("timeout", 0)
+	timeout, err := time.ParseDuration(txn.Params().MustString("timeout", "0"))
+
+	if err != nil {
+		timeout = 0
+	}
 
 	//get the key param
 	if key, kok := txn.Params().GetString("key"); kok {

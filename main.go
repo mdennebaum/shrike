@@ -3,8 +3,10 @@ package main
 import (
 	"flag"
 	"github.com/mdennebaum/shrike/controllers"
+	"github.com/pmylund/go-cache"
 	"github.com/trendrr/goshire/cheshire"
 	"log"
+	"time"
 )
 
 //init the app
@@ -26,7 +28,7 @@ func main() {
 	bootstrap := cheshire.NewBootstrapFile(config)
 
 	//create new cache with default timeout durration
-	c := cache.NewCache(nil)
+	c := cache.New(5*time.Minute, 30*time.Second)
 
 	//start the cache api
 	controllers.StartApi(c)
