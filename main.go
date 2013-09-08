@@ -1,7 +1,7 @@
 /*
-Shrike is a simple memory based key value store goshire service.
-Shrike uses the STREST protocal and by default is configured to enable http, json and binary
-listeners.
+Shrike is a simple memory based key value store goshire (https://github.com/trendrr/goshire) service.
+Shrike uses the STREST protocol (https://github.com/trendrr/strest-server/wiki/STREST-Protocol-Spec)
+and by default is configured to enable http, json and binary listeners.
 */
 package main
 
