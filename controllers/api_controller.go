@@ -1,3 +1,6 @@
+/*
+controllers package holds the api controllers for exposing the cache interface
+*/
 package controllers
 
 import (

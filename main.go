@@ -1,3 +1,8 @@
+/*
+Shrike is a simple memory based key value store goshire service.
+Shrike uses the STREST protocal and by default is configured to enable http, json and binary
+listeners.
+*/
 package main
 
 import (
