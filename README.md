@@ -1,6 +1,13 @@
 #Shrike
 
-Simple memory based key value store goshire service.
+Simple memory based key value store goshire service. Shrike uses the STREST protocal and by default
+is configured to enable http, json and binary listeners.
+
+##Persistance
+
+Shrike is primarily an in memory store but by setting a data_dir value in your config file, Shrike
+will dump all data on interupt or sigterm to a backup file which it will load back in next time you
+start it.
 
 ##Install
 
@@ -24,7 +31,8 @@ Once you've edited the config.yaml to your liking run the following.
 go run main.go -config=/path/to/config.yaml
 ```
 
-Alternatively if your config folder is located in the same dir as the executable you can omit the -config flag
+Alternatively if your config folder is located in the same dir as the executable you can omit the
+-config flag
 
 ```
 go run main.go
@@ -34,8 +42,5 @@ Then you should be able to point your browser at http://localhost:8010/ping to m
 
 ##More
 
-For more info on how to use the goshire framework checkout https://github.com/trendrr/goshire. If there are any issues please submit an ticket.
-
-##Not Implimented
-
-Cleaning up of expired items...
+For more info on how to use the goshire framework checkout https://github.com/trendrr/goshire.
+If there are any issues please submit an ticket.
