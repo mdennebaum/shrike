@@ -4,10 +4,10 @@ Simple memory based key value store goshire service.
 
 ##Install
 
-To get started make sure you have the following installed
-
 ```
-github.com/trendrr/goshire
+go get github.com/pmylund/go-cache
+go get github.com/trendrr/goshire
+go get github.com/mdennebaum/shrike
 ```
 
 Checkout or download shrike to a directory in your gopath.
