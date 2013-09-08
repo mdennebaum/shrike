@@ -94,8 +94,22 @@ func Set(txn *cheshire.Txn) {
 }
 
 // a demo Ping controller function
-// func Delete(txn *cheshire.Txn) {
-// 	response := cheshire.NewResponse(txn)
-// 	response.Put("data", "PONG")
-// 	txn.Write(response)
-// }
+func Delete(txn *cheshire.Txn) {
+
+	//create a new response for this transaction
+	response := cheshire.NewResponse(txn)
+
+	//get the key for the requested value
+	if key, ok := txn.Params().GetString("key"); ok {
+
+		//delete the value for the passed key
+		c.Delete(key)
+	} else {
+
+		//set error status for missing key
+		response.SetStatus(400, "missing key param")
+	}
+
+	//write the response
+	txn.Write(response)
+}
