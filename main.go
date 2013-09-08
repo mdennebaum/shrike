@@ -12,7 +12,7 @@ import (
 //init the app
 func init() {
 	//init to parse the command line args
-	flag.StringVar(&config, "config", "config/config.yaml", "path to the app config.yaml")
+	flag.StringVar(&config, "config", "config.yaml", "path to the app config.yaml")
 }
 
 //string to hold the config path

@@ -14,7 +14,7 @@ Checkout or download shrike to a directory in your gopath.
 
 ##Config
 
-Edit the config/config.yaml file to match with your settings.
+Edit the config.yaml file to match with your settings.
 
 ##Run
 
