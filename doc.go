@@ -1,0 +1,5 @@
+/*
+Shrike
+
+*/
+package main
