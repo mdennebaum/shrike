@@ -6,6 +6,9 @@ import (
 	"github.com/pmylund/go-cache"
 	"github.com/trendrr/goshire/cheshire"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -30,6 +33,9 @@ func main() {
 	//create new cache with default timeout durration
 	c := cache.New(5*time.Minute, 30*time.Second)
 
+	//load from data file and setup backup
+	c = initData(c, bootstrap.Conf)
+
 	//start the cache api
 	controllers.StartApi(c)
 
@@ -38,4 +44,43 @@ func main() {
 
 	//starts listening on all configured interfaces
 	bootstrap.Start()
+}
+
+//init cache dump on exit and reload on start
+func initData(cache *cache.Cache, conf *cheshire.ServerConfig) *cache.Cache {
+
+	//load cache dump data
+	if data_dir, ok := conf.GetString("data_dir"); ok {
+
+		//backup file name
+		fileName := data_dir + "/shrike.db"
+
+		//load cache backup data
+		cache.LoadFile(fileName)
+
+		//create a signal channel
+		c := make(chan os.Signal, 1)
+
+		//register for notifications on interrupt and sigterm
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+
+		//watch for the exit sigs and dump cache to file
+		go func() {
+			for sig := range c {
+
+				//print notice to stdout
+				log.Println(sig)
+				log.Println("saving to file")
+
+				//dump to file
+				cache.SaveFile(fileName)
+
+				//exit process
+				os.Exit(1)
+			}
+		}()
+	}
+
+	//return the loaded cache
+	return cache
 }
