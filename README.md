@@ -3,6 +3,10 @@
 Simple memory based key value store goshire service. Shrike uses the STREST protocal and by default
 is configured to enable http, json and binary listeners.
 
+##Docs
+
+For more info on available functions the docs are here: http://godoc.org/github.com/mdennebaum/shrike
+
 ##Persistance
 
 Shrike is primarily an in memory store but by setting a data_dir value in your config file, Shrike
